@@ -1,0 +1,274 @@
+> Reviewer #1: This is a very interesting and useful paper. The problem of trajectory similarity is complex and picking the right similarity measure can be quiet challenging. This paper provides valuable insights into the performance of commonly used similarity measures for different trajectory data sets. The paper reads well for the most part, however it suffers from some presentation issues in section 3 and in most of figures (see comments below). I also have some concerns regarding the experiments, as summarized below. I believe the paper can make a strong contribution, if the following problems are addressed properly:
+>
+> In section 3, for the theoretical definitions of DTW, EDR, LCSS and DFD, the three possible ways of advancing to the next point need to be explained better. It is confusing to have three bullet points with the same redundant text. It would be better to come up with a more efficient way to paraphrase those sections for clarity and ease of understanding.
+
+******  K&R: Add sentence at the beginning of Sec. 3, point out that to facilitate our goal we are not only giving the definition of the measures but also presenting them in a uniform / common way.
+
+=====> R: Done.
+
+> Please explain what is the point/importance of using a continuous similarity measure (mainly applied in curve matching) for discrete movement observations (i.e trajectories).
+
+****** K&R: write something about that, mentioning effect of gaps and non-uniform sampling.
+
+=====> R: Added a paragraph in Sec. 3.7.2 about gaps (that touches upon this as well)
+
+> How is that the LSED can’t be used with relative time? I can imagine if all the points are translated to relative time from thehttps://www.overleaf.com/project/5c4089cd4ca53357fbd029a5 first tracking point you can still apply LSED. Please clarify.
+
+****** K&R: Indeed (and related to a comment by Rev. 3) "relative time" should be defined better. Write in paragraph about Relative Time in Sec 2 what we mean by relative time. Check what definition is actually used in the experiments with buses.
+Then rephrase first sentence in 3.7.3 accordingly (the  difference  between LSED and the rest is that LSED only allows diagonal moves along the matrix).
+
+=====> K: Defined as local differences in Section 2. Slightly changed phrasing for buses. I extended 3.7.3.
+
+
+> The theoretical evaluation (in section 3.7 and perhaps in section 6) requires discussions on the following issues
+> - How do these measures compare when applied on long and convoluted trajectories (irregular and complex trajectory shapes)?
+> - How do these measures compare when trajectories include gaps?
+> - How do these measures perform when trajectories are of different sampling intervals or different lengths?
+
+****** K&R: We'll try to say something about this.
+
+=====> R: Added a paragraph in Sec. 3.7.2 about gaps
+
+> Section 4.1 is missing important information about the datasets used in the experiments. For instance, how long (duration and number of GPS points) are each tracks and what are the sampling rates of each datasets. How many tracks per dataset were used in each experiment?
+>
+> Experiments use trajectories with simple structures (as figures 2 and 3 suggests), and in the case of oystercatchers data, very few tracking points are used. I would like to see an experiment with longer and more complex shaped tracks (e.g. trajectories that includes both flying and foraging behaviors).
+>
+> Experiment 3 with bird data set uses two extremely different behavioral cases of flying and foraging. It would be interesting to see the performance on behaviors that don’t show such extreme differences.
+>
+> In experiment 4, did you use flying or foraging portions of the bird dataset? Or did you use mixed trajectories including both behaviors? Please clarify.
+>
+> Please check your notations for consistency. Sometimes a point is formalized as “point (s,t)” and other times as points (A(s) , B(t)). Also using an s for time is a little confusing. Maybe use t and t’ instead of t and s.
+>
+> Star ratings can be misleading in Table 1. I would recommend replacing the stars with verbal descriptions for clarity.
+>
+> Comments on the figures:
+> Most figures do not have any label representing the x and y axis.
+>
+> Figure 2: This figure is misleading and is not a good representation as how the actual tracks are. Fig 2 has a top and a bottom part, and there is no left or right parts as suggested in the figure caption. Both graphs are missing x and y axes labels. It is not clear which one is the pair collected at different days and which one is the pair with different routes and different times. Instead of a spatial shift (gray tracks), mapping the pair in two separate side by side figures would be much better. Please show the tracks in separate graphs and add a background map of the road network for clarity.
+>
+> Figure 4: This again is not a good representation choice for described transformations. The translations in time and space are not clear in the figures. For instance figures a-c and b-d are almost identical with the hardly visible slight rotation. I would suggest re-creating these figures to better represent the concepts. Adding temporal information might help. Again background maps and labels are necessary.
+>
+> Please review reference lists. I picked one redundancy #8 and #15.
+>
+> The link provided for Dublin bus data in reference #37 does not work. Please fix, if possible. Provide info on how to obtain the oystercatcher dataset.
+>
+> Reviewer #2: This comparison of trajectory similarity measures is welcome and ultimately could be very useful for researchers attempting to navigate the somewhat bewildering set of measures available. The experiments are well-designed.
+>
+> However, I think some aspects of the manuscript could be improved:
+>
+> 1) I am having some trouble seeing how the matrix formulations of the measures is insightful. Figure 1 is certainly useful for understanding the measures, but the matrix formulations within the narrative seems a bit drawn-out and pedagogical.
+
+****** K&R: Ignore.
+
+
+
+> 2) Sections 3.7 and 3.8 could be combined and condensed.
+****** K&R: Ignore.
+
+
+> 3) The experiments are limited in the sense that they only use two, very different datasets - scheduled public transit vehicles moving within constrained 2D network space and birds moving within unconstrained 3D (?) space. It would be helpful to have at least one more dataset for comparison purposes such as pedestrians moving within 2D semi-constrained spaces such as sidewalks and public spaces, and perhaps automobiles moving within a network (since their patterns tend to be less regimented than scheduled public transit service). More generally, additional datasets with contrasting movement semantics would help to support the general conclusions this paper is trying to make.
+>
+> Reviewer #3: The aim of this paper is to provide recommendations for selecting distance measures to compare movement trajectories in practice. The authors describe and compare six different distance measures for comparing trajectories: the Euclidean distance, dynamic time warping, edit distance, longest common subsequence, discrete Frechet distance, and Frechet distance. They consider two different data sets of GPS trajectories: bus trajectories from Dublin, and oystercatcher bird trajectories tagged with bird activities (flight or foraging).
+>
+> Four kinds of experiments were conducted using these two datasets, to compare these six distance measures: (1) Applying small spatial and/or temporal perturbations to a single trajectory and computing the distance to the original trajectory. (2) Compare pairs of bus trajectories based on whether they lie on the same bus route or not, and whether they lie within the same hourly time slot or not. (3) Compare oystercatcher trajectories based on whether they have the same flight/foraging tag or not. (4) Compare bus and bird trajectories. For the first experiment, the authors indicate in which order the six different distance measures rank the distance of the differently perturbed curves to the original curve. The results for the last three experiments are presented using box plots, and for (3) statistical test are performed in addition.
+>
+>
+> The paper is generally easy to read in terms of English presentation. However, I have serious concerns with the technical description and experimental design.
+> * The authors chose a very limited set of distance measures, and very specific variants of them.
+
+****** K&R: Add a paragraph surveying  existing measures and justifying our selection.... we choose the most popular and highly cited etc etc.
+
+=====> Done.
+
+> The paper misses to convey the big picture, but goes into long details on how specific variants of distance measures from specific papers are implemented. In particular, it does not present the broader picture that DTW, edit distance, and discrete Frechet distance are all DP-based distance measures with slight variations in their recursive definitions. It is not surprising that these behave in the same way in the experiments, but the authors are not aware of that. I also would have expected a much broader survey of other types of distance measures.
+
+****** K&R: We'll add some survey.
+
+=====> Comment added to tex file
+
+
+> * Overall the verbal descriptions are overly lengthy, while the technical descriptions are missing, have errors, or are given without explaining the meaning. It is not defined what relative vs absolute space or time means, yet table 1 lists these properties for the different distance measures. The technical part of the paper needs to be strengthened.
+
+****** K&R: Ignore the comment about length. Some of the other things will be addressed.
+
+=====> Comment added to tex file
+
+
+> * There are only two datasets used. And the datasets are not well-defined (sampling rate, length, size,... is not specified). In the figures, the axes have no labels, so it is not clear what the numbers mean (is it really 20,000 meters for comparing bus trajectories in Dublin?).
+>
+>
+> The general intent of comparing distance measures and giving advice to practitioners which distance measure to use is good. However, the methodology used in this paper is not adequate for this purpose. The description of distance measures is too much focused on specific details of an arbitrary choice of measures, and lacks the big picture and a thorough review of related work. The number of data sets needs to be significantly larger than two, and the data sets need to be described in detail in order for the study to be valid. The experiments need to be larger (experiment one seems to involve only a single trajectory?), and they need to be presented in a scientifically accurate way, with labelled axes on the plots.
+>
+> Comments:
+>
+> - page 2: Consider rewording "crisp" and "ill-defined". Maybe "the spatial extent is not well-defined"?
+
+******  R: I'm not sure why we should reword those words.
+
+=====> R: ignore
+
+> - page 4: If you consider trajectories in 2D only, this should be stated earlier in the paper. It needs to be stated that the trajectories are sequences (so, you assume a_i < a_j for i
+
+******  K&R: Check if our results are only for 2D, and mention if so.
+
+****** R: It is true that in the Preliminaries we define trajectory points as in 2D. However, I doubt that we use that later. Maybe the easiest is to keep things in 2D, and add a sentence there like: "Note that all the measures discussed, and most of our analysis, applies also to trajectories in higher dimensions with only minor modifications."
+
+=====> Done (added footnote)
+
+
+> - page 5: Why don't you want to use shape features and directions for comparing movement trajectories?'t you want to use shape features and directions for comparing movement trajectories?
+
+****** K&R: At the end of 2.2, mention that many of the things we say also hold if you change "location" by other features, like direction. Go back to this in the conclusions, adding a new paragraph "Location vs other features", saying we did not look at that, but there are many combinations of location, direction, etc. (we could cite measures that combine these things).
+
+=====> Comment added to tex file
+
+
+> - I found the notion of the "conceptual perspective" to be odd terminology. The corresponding section simply describes different properties of distance measures that might be desired in applications, such as metric/non-metric, discrete/continuous, and absolute vs. relative time and space. Also,
+
+****** P: Now submitted to IJGIS, this may not be a problem anymore, as "conceptual models" for spatial phenomena (entities, fields) are common and established terminology.
+
+****** P: Ignore.
+
+>
+> - It is unclear from the presentation how you define relative time, absolute time, relative space, absolute space. Section 2.2.3 has paragraphs that appear to be defining these concepts, but they actually don't. The "relative time" paragraph gives some examples, but it is not clear what relative time is supposed to be. The "absolute time and space" paragraph just mentions that trajectories must have the same length, and similar positions and speed. What do "absolute space" and "absolute time" mean when considered separately from each other? It appears that "relative space" means that the trajectories lie in different coordinate systems and therefore the distance measure should be transformation-invariant. In section 3 you compare relative time and bsolute time and space, but it is unclear from your description what exactly you mean. In particular, in table 1 the rows "relative time, relative space following transformation, and relative space using invariant distance" are entirely unclear.
+
+****** K&R: Be more specific in 2.2.3, see comment by Rev 1.
+
+======> Done
+
+> - The notion of alignment is never formally introduced, even though it is a central concept for all the distance measures you consider. E.g., on page 13 line 274 and on page 14, line 303 you mention alignments, but it's not clear what is meant.
+
+****** K&R: In the Matrix Formulation of DTW, when introducing the alignment, we can be a bit more formal and make it look more like a definition.
+
+=======> R: I tried, but it does not look very formal. We should try harder.
+
+
+> - On pages 8 and 9, it is unclear if you define the Euclidean distance only for the case that s_i=t_i, or also if that is not the case. On page 8 you write "if s_i=t_i" but on page 9 you write that "trajectories should be aligned using a strict correspondence in time". If this is your assumption, it should be stated at the beginning of the paragraph. And "alignment" needs to be defined.
+
+****** K&R: True, and related to previous comments. Look into it.
+
+=======> R: I assume LSED is defined like that even if s_i != t_i, so I added a few words in that direction ("The definition above is most meaningful...").
+
+> - On pages 8 and 9 there are some issues with the interpolation formula A(t). In line 174 on page 8, why do you write A(t-s_1)? In the integral t ranges from 0 to s_n-s_1.
+
+****** K&R: Right, the minuses should be pluses.
+
+=======> R: Changed - for + in definition of Eu(A,B)
+
+
+> Then on page 9 in formula (1) I believe you need to switch a_i and a_{i+1}, but note that this parameterizes A(t) for t between s_i and s_{i+1}
+
+****** K&R: Right, exchange a_i and a_i+1.
+
+=======> R: Done.
+
+> - Page 8, line 182: variants *are* widely used
+=======> R: Done.
+
+> - Page 10, last line: How does one enforce similar time-stamps?
+> - Page 11, line 234: Why is this more intuitive? It doesn't seem more intuitive to me.
+
+****** P: Reworded, done.
+
+> - Page 11, line 246: I do not see how the runtime can be reduced to linear time; such a claim needs to be explained. In [26] they don't make such a claim either. I suppose you could restrict the DP table to a strip of fixed width around the diagonal, but if that's what you want to do you need to write that explicitly.
+
+****** K&R: Check or  find a better reference of rephrase. Mention SIGSPATIAL'17 challenge?
+
+=====> Comment added to tex file
+
+
+> - EDR and DTW are almost exactly the same, except that in EDR you d^2 to the sum each time. Why aren't these distance measures grouped together in one category to begin with?
+
+****** K&R: Ignore.
+
+
+> - In section 3.4 you need to define what it means to have the longest subtrajectory in common. In particular, the term subtrajectory needs to be defined (as a subsequence, but you also need to define the term subsequence for the reader). Also, in the formula on line 284, the |n-m|\leq\delta is not correct syntax because n i sthe number of points, not time.
+
+****** K&R: Avoid using term "longest subtrajectory", we should refer to sequences.
+
+=======> R: Done.
+
+
+> - Page 13, line 288: "However, it should be noted that delta is not specific to LCSS, and could be added to an of the other measures." This needs to be mentioned more prominently for the other measures as well, and you need to mention how this affects the runtime.
+
+****** K&R: Add something to 3.7.3 and 3.7.5 (you may want to do it to get it running faster). Maybe mention it again in the Conclusions and Recom, because it is something that you have to consider when choosing the measure.
+
+=======> R: Comment added to tex file.
+
+
+> - Page 13, line 292: The direction in which the path is searched in the DP table is completely arbitrary and depends on the recursive formulation that you chose for the different distance measures. This is not what distinguishes LCSS from the other DP-based distance measures.
+
+****** K&R: Move footnote 1 to text and add that it does not make  difference in the final value of the measure, even though the final alignment can be different.
+
+=======> R: Done.
+
+> - Page 14, line 305: You know that ED(x,y)=n+m-2*LCS(X,Y) for strings, if ED only has insertion and deletion. So, there is a very close relationship between them that is well-known. Of course your definitions are a bit different because they have adapted string distances to point sequences.
+
+****** K&R: Ignore.
+
+
+> - Please check the English formulation of "Essentially, DFD's difference from DTW" on page 15.
+
+****** P: Replaced _from_ with _to_ . Done.
+
+>
+> - On page 16 at the top, it is unclear from your description how this can be interpreted as the continuous version of discrete Frechet distance.
+
+****** K&R: Emphasize they are both based on taking the max along the alignment, one is discrete and one is continuous.
+
+=======> R: Done.
+
+> - Also, you need to distinguish free space from the free space diagram (product space). And, on line 367, the alignment is not just a single line segment.
+
+****** K&R: In the 2nd to last paragraph, sentence "The free-space diagram"... remove word "diagram".
+
+=======> R: Done.
+
+> - In table 1, for a given epsilon, FD is not slower than EDR and LCS which are given an epsilon as well.
+>
+> - In section 3.7.4 you might want to mention Efrat et al.'s "Curve Matching, Time Warping, and Light Fields: New Algorithms for Computing Similarity between Curves" paper and the DTW distance they define.
+
+****** K&R:Check if it is relevant.
+
+=======> R: This paper defines a continuous variant of DTW. We already cite it in 3.7.2. Not sure what it has to do with 3.7.4 though. Ignore.
+
+> - In section 3.7.5, it is unclear what you mean with "typically runs in linear time". And you are missing various recent results that show that (discrete) Frechet distance and edit distance can be computed in slightly subquadratic time.
+
+****** K&R:Rephrase.  Add some generic paragraph about these results with some citations.
+
+
+=======> R: Comment in tex file.
+
+
+> - The two data sets have not been well-defined. What is the sampling frequency, how many trajectories are there, how long are they, what is the coordinate system (lat/long or projected x/y)? For the bird data, can there be trajectories that contain both flight and foraging information? Is the foraging data always contained in a small neighborhood, as opposed to the flight data? That would mean that the data has a very unique spatial pattern to begin with. On page 22, what exactly do you sub-sample (are the trajectories sampled that frequently to begin with)? And what do you mean with "increasing temporal interval"; that needs to be specified.
+>
+> - What do we see in Figure 1? Are the dashed the fixes? What is the coordinate system? And I find it quite confusing that one of the trajectories has been "displaced"
+
+****** P: Added a sentence about dashed lines, ignore the rest.
+
+>
+> - Page 21, last line: foraging. And on page 22, line 502, please check the English in "It is the features that are invariant"
+
+****** P: Rephrased. Done.
+
+>
+> - Page 23, what is an "empirical trajectory"?
+
+****** P: Rephrased, replaced "empirical", with "tracking data" 
+>
+> - Page 24: transformation in space and time was utilized -> How?
+>
+> - Page 25, why do you have different normalization factors? And what do you mean with physical interpretation? And since there are no scales on the axes, it is unclear what the distances are anyways.
+>
+> - In Figures 5, 6, 7, what is the scale on the axes? Is that 20,000 meters in Figure 5, but 3,000 meters in Figure 6?? These high numbers are quite disturbing if they are meters. But then, it's unclear what the scale of the data is to begin with since it wasn't specified.
+>
+> - It took me a while to understand what you are comparing with Kruskal-Wallis and with Wilcoxon. First of all, you need to use the same notation in Table 4 and in Figure 6 (FlyFly or FlyVsFly). But then, I wonder why don't you compare for a fixed experiment (say, BirdBird) the different rankings that the different distance measures produce? This would be somewhat akin to what you did in section 5.1 for experiment 1.
+>
+> - I don't find point 2 in section 5.5 particularly surprising, since you used distance measures that by design are based on spatial (dis-)similarity
+>
+> - On page 29, please check the English on line 703
+>
+> - On page 31, I don't agree that "low resolution" is an issue. You chose to scale it, and you are free to scale it differently to get larger numbers.
+
+****** P: Rephrased, done.
+
